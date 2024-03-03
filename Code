@@ -1,0 +1,35 @@
+import csv
+import os
+import shutil
+
+# Function to read CSV file and return a list of file names
+def read_csv(csv_file):
+    with open(csv_file, 'r') as file:
+        reader = csv.reader(file)
+        # Assuming the file names are in the first column of the CSV
+        file_names = [row[0] for row in reader]
+    return file_names
+
+# Function to copy files from source folder to destination folder
+def copy_files(source_folder, destination_folder, file_names):
+    for file_name in file_names:
+        source_path = os.path.join(source_folder, file_name)
+        if os.path.exists(source_path):
+            destination_path = os.path.join(destination_folder, file_name)
+            shutil.copy2(source_path, destination_path)
+            print(f"File '{file_name}' copied successfully.")
+        else:
+            print(f"File '{file_name}' not found in source folder.")
+
+# Paths and file names
+csv_file = 'file_names.csv'  # Your CSV file containing file names
+source_folder = 'source_folder'  # Source folder where files are located
+destination_folder = 'destination_folder'  # Destination folder to copy files
+
+# Read file names from CSV
+file_names = read_csv(csv_file)
+
+# Copy files to destination folder
+copy_files(source_folder, destination_folder, file_names)
+
+#Make sure to replace 'file_names.csv', 'source_folder', and 'destination_folder' with the actual paths to your CSV file, source folder, and destination folder respectively.
